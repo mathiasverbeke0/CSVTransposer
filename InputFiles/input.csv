@@ -1,6 +1,6 @@
 "","pH","Sex","Ethnicity","Age","DeathType"
-"1",7.13,"M","Caucasian",64,"Cardiac"
-"2",6.5,,"Caucasian",63,"Cardiac"
+"1",7.13,"M",Caucasian,64,"Cardiac"
+"2",6.5,"M","Caucasian",63,"Cardiac"
 "3",6.4,"M","AfricanAmerican",59,"Cardiac"
 "4",6.53,"M","Caucasian",52,"Cardiac"
 "5",6.58,"M","Caucasian",58,"Cardiac"
