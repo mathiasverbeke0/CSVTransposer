@@ -23,6 +23,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('infile', help = 'Provide the name of the input file.')
 parser.add_argument('-d', '--delimiter', required = False, default = 'comma', choices=['comma', 'semicolon', 'colon', 'tab'])
 parser.add_argument('-n', '--newdelimiter', required = False, choices = ['comma', 'semicolon', 'colon', 'tab'])
+parser.add_argument('-q', '--quote', action = 'store_true', help = 'Quote al non-numeric values.')
 
 args = parser.parse_args()
 
@@ -97,8 +98,29 @@ with open(args.infile, 'r') as csvfile:
 transposed_data = list(map(list, zip(*data)))
 
 # Write the transposed data to a new CSV file
-with open(output_file, 'w', newline='') as csvfile:
-    csvwriter = csv.writer(csvfile, delimiter=args.newdelimiter)
-    csvwriter.writerows(transposed_data)
+if args.quote != True:
+    with open(output_file, 'w', newline='') as csvfile:
+        csvwriter = csv.writer(csvfile, delimiter=args.newdelimiter)
+        csvwriter.writerows(transposed_data)
 
-print(f"{args.infile} transposed and saved to {output_file}") 
+else:
+    with open(output_file, 'w', newline='') as csvfile:
+        csvwriter = csv.writer(csvfile, delimiter=args.newdelimiter, quoting=csv.QUOTE_NONNUMERIC)
+        for row in transposed_data:
+            new_row = []
+            for item in row:
+                # Test if field is numeric
+                try:
+                    item = float(item)
+                    
+                    # Test if field is integer
+                    if item.is_integer():
+                        item = int(item)
+
+                except:
+                    pass
+                
+                new_row.append(item)
+            csvwriter.writerow(new_row)
+
+print(f"{args.infile} transposed and saved to {output_file}")
