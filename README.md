@@ -43,7 +43,7 @@ We want to transpose the data and write it to a new CSV file named transposed_in
 ```bash
 "Name","John","Mary","Bob"
 "Age",25,30,40
-"City","New" "York","San" "Francisco","Los Angeles"
+"City","New" "York","San Francisco","Los Angeles"
 ```
 
 ### Command
