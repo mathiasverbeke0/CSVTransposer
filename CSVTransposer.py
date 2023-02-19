@@ -24,7 +24,7 @@ parser.add_argument('infile', help = 'Provide the name of the input file.')
 parser.add_argument('-d1', '--delimiter1', required = False, default = 'comma', choices=['comma', 'semicolon', 'colon', 'tab'], help = "The delimiter used in input file.")
 parser.add_argument('-d2', '--delimiter2', required = False, choices = ['comma', 'semicolon', 'colon', 'tab'], help = "The delimiter used in output file.")
 parser.add_argument('-q1', '--quotation1', required = True, choices = ['quoted', 'unquoted'], help = 'Specify if non-numeric values in input file are (un)quoted.')
-parser.add_argument('-q2', '--quotation2', required = True, choices = ['quoted', 'unquoted'], help = 'Specify if non-numeric values in output file must be quoted.')
+parser.add_argument('-q2', '--quotation2', required = True, choices = ['quoted', 'unquoted'], help = 'Specify if non-numeric values in output file must be (un)quoted.')
 
 args = parser.parse_args()
 

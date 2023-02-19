@@ -24,7 +24,7 @@ options:
   -q1 {quoted,unquoted}, --quotation1 {quoted,unquoted}
                         Specify if non-numeric values in input file are (un)quoted.
   -q2 {quoted,unquoted}, --quotation2 {quoted,unquoted}
-                        Specify if non-numeric values in output file must be quoted.
+                        Specify if non-numeric values in output file must be (un)quoted.
 ```
 
 ## Example
