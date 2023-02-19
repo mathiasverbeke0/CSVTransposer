@@ -1,52 +1,74 @@
 # CSV Transposer
 The CSV Transposer is a simple command-line tool for transposing CSV files, which allows users to switch the orientation of the data from rows to columns or vice versa. It reads in a CSV file, transposes the data, and writes the transposed data to a new CSV file.
 
+## Requirements
+The script requires Python 3.x and the following Python modules:
+* argparse
+* csv
+* sys
+* os
+
 ## Usage
 ```bash
-usage: CSVTransposer.py [-h] [-d {comma,semicolon,colon,tab}] [-n {comma,semicolon,colon,tab}] infile
+usage: CSVTransposer.py [-h] [-d1 {comma,semicolon,colon,tab}] [-d2 {comma,semicolon,colon,tab}] -q1 {quoted,unquoted} -q2 {quoted,unquoted} infile
 
 positional arguments:
   infile                Provide the name of the input file.
 
 options:
   -h, --help            show this help message and exit
-  -d {comma,semicolon,colon,tab}, --delimiter {comma,semicolon,colon,tab}
-  -n {comma,semicolon,colon,tab}, --newdelimiter {comma,semicolon,colon,tab}
+  -d1 {comma,semicolon,colon,tab}, --delimiter1 {comma,semicolon,colon,tab}
+                        The delimiter used in input file.
+  -d2 {comma,semicolon,colon,tab}, --delimiter2 {comma,semicolon,colon,tab}
+                        The delimiter used in output file.
+  -q1 {quoted,unquoted}, --quotation1 {quoted,unquoted}
+                        Specify if non-numeric values in input file are (un)quoted.
+  -q2 {quoted,unquoted}, --quotation2 {quoted,unquoted}
+                        Specify if non-numeric values in output file must be quoted.
 ```
 
-## Input/Output
-The CSV Transposer takes a single input file and produces a single output file.
+## Example
 ### Input
-The input file should be a CSV file with a header row and any number of data rows. All rows must have the same number of columns. The file can be delimited by a comma, tab, or any other character that can be specified using the -d or --delimiter flag.
-
-Here is an example input file input.csv:
+Suppose we have a CSV file named input.csv that contains the following data:
 ```bash
-a,b,c
-1,2,3
-4,5,6
-7,8,9
+Name,Age,City
+John,25,New York
+Mary,30,San Francisco
+Bob,40,Los Angeles
 ```
+The delimiter used in this file is a comma (,).
 
 ### Output
-The output file will also be a CSV file with a header row and the same number of data rows as the input file, but with columns and rows transposed. By default, the output file will be delimited by the same delimiter as the input file.
-
-Here is an example output file transposed_input.csv:
+We want to transpose the data and write it to a new CSV file named transposed_input.csv. The new file should contain the following data:
 ```bash
-a,1,4,7
-b,2,5,8
-c,3,6,9
+"Name","John","Mary","Bob"
+"Age",25,30,40
+"City","New" "York","San" "Francisco","Los Angeles"
 ```
 
-## Examples
-```bash 
-$ python CSVTransposer.py data.csv
+### Command
+We want to specify that non-numeric values in the input file are unquoted and non-numeric values in the output file must be quoted. We can achieve this by using the -q1 unquoted -q2 quoted options.
+Here's the command to achieve the desired output:
+```bash
+CSVTransposer.py -q1 unquoted -q2 quoted input.csv
 ```
-This command will read in the input CSV file, which is seperated by a comma, transpose the data, and write the transposed data to a new CSV file called transposed_data.csv in the same directory as the input file.
+We can also specify a different delimiter for the output file using the -d2 option. For example, if we want to use a semicolon (;) as the delimiter in the output file, we can use the following command:
+```bash
+CSVTransposer.py -q1 unquoted -q2 quoted -d2 semicolon input.csv
+```
 
-```bash 
-$ python CSVTransposer.py data.csv -d semicolon
-```
-This command will read in the input CSV file, which is separated by semicolons, transpose the data, and write the transposed data to a new CSV file called transposed_data.csv in the same directory as the input file.
+## Error messages
+The script provides the following error messages:
+* *Error: invalid csv file: There are empty rows in the csv file.*
+* *Error: invalid csv file: The amount of columns differs between rows. Your input file probably contains unquoted fields with a comma (e.g. float with comma as decimal separator).*
+* *Error: Error: could not convert string to float: 'Cardiac'. Non-numeric values in the input file must be quoted by default. Your input file probably contains unquoted non-numeric values. If this is the case, you need to use the '-q1 unquoted' option. This option will instruct the script to read non-numeric values as strings and not attempt to convert them to numbers.*
+
+# Notes
+* If the -d1 option is not provided, the tool will use the comma as default delimiter.
+* The CSVTransposer tool is designed to work with comma, semicolon, colon, and tab-delimited CSV files.
+* The input file should have consistent delimiters throughout the file, but the delimiter used in the input file can be different from the delimiter used in the output file.
+If the input file contains a header row, the header row will be transposed to the first column in the output file.
+* The script does not check if the output file already exists. If the output file already exists, it will be overwritten.
 
 ## Contributing
 Contributions are always welcome! If you find any issues or have suggestions for how to improve this tool, please feel free to open an issue or submit a pull request. To contribute, please follow these steps:
